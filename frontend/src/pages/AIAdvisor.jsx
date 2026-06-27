@@ -1,6 +1,20 @@
 import { useEffect, useState } from 'react';
 import { getAIInsights } from '../api/api';
-import { Sparkles, RefreshCw, Smartphone, Package, Coins, Users, Lightbulb, Bot } from 'lucide-react';
+import { Sparkles, RefreshCw, Smartphone, Package, Coins, Users, Lightbulb, Bot, AlertTriangle, Flame, TrendingUp, HelpCircle } from 'lucide-react';
+
+const INSIGHT_ICONS = {
+  '📦': <Package size={22} />,
+  '🚨': <AlertTriangle size={22} />,
+  '🔥': <Flame size={22} />,
+  '💰': <Coins size={22} />,
+  '📈': <TrendingUp size={22} />,
+  '💡': <Lightbulb size={22} />,
+  '📊': <Sparkles size={22} />
+};
+
+function getInsightIcon(emoji) {
+  return INSIGHT_ICONS[emoji] || <HelpCircle size={22} />;
+}
 
 export default function AIAdvisor() {
   const [data,    setData]    = useState(null);
@@ -58,7 +72,7 @@ export default function AIAdvisor() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           {data.insights.map((ins, i) => (
             <div key={i} className={`insight-card ${ins.type}`}>
-              <div className="insight-icon">{ins.icon}</div>
+              <div className="insight-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{getInsightIcon(ins.icon)}</div>
               <div className="insight-content">
                 <h4>{ins.title}</h4>
                 <p>{ins.message}</p>

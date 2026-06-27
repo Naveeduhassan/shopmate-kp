@@ -131,10 +131,13 @@ export default function Reports() {
             fontWeight: 700,
             cursor: 'pointer',
             fontSize: '0.9rem',
-            transition: 'var(--transition)'
+            transition: 'var(--transition)',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6
           }}
         >
-          📈 Monthly Analytics
+          <TrendingUp size={16} /> Monthly Analytics
         </button>
         <button
           className={`tab-btn ${activeTab === 'log' ? 'active' : ''}`}
@@ -148,10 +151,13 @@ export default function Reports() {
             fontWeight: 700,
             cursor: 'pointer',
             fontSize: '0.9rem',
-            transition: 'var(--transition)'
+            transition: 'var(--transition)',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6
           }}
         >
-          🕒 Sales History Log
+          <Clock size={16} /> Sales History Log
         </button>
       </div>
 
