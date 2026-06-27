@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getDailyReport } from '../api/api';
-import { TrendingUp, ShoppingBag, Package, Users, AlertTriangle, ArrowRight, Target, Clock } from 'lucide-react';
+import { TrendingUp, ShoppingBag, Package, Users, AlertTriangle, ArrowRight, Target, Clock, Store, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import {
   AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer,
@@ -70,13 +70,15 @@ export default function Dashboard() {
         display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12,
       }}>
         <div>
-          <div style={{ fontWeight: 800, fontSize: '1.1rem' }}>🏪 {shopName}</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontWeight: 800, fontSize: '1.1rem' }}>
+            <Store size={18} color="var(--accent)" /> {shopName}
+          </div>
           <div style={{ color: 'var(--text-muted)', fontSize: '0.83rem', marginTop: 2 }}>
             {new Date().toLocaleDateString('en-PK', { weekday:'long', year:'numeric', month:'long', day:'numeric' })}
           </div>
         </div>
         <Link to="/sales" className="btn btn-primary">
-          <ShoppingBag size={15} /> New Sale
+          <ShoppingCart size={15} /> New Sale
         </Link>
       </div>
 
