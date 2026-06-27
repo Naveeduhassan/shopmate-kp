@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getDailyReport } from '../api/api';
-import { TrendingUp, ShoppingBag, Package, Users, AlertTriangle, ArrowRight, Target } from 'lucide-react';
+import { TrendingUp, ShoppingBag, Package, Users, AlertTriangle, ArrowRight, Target, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import {
   AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer,
@@ -274,7 +274,7 @@ export default function Dashboard() {
         {/* Recent Sales */}
         <div className="card">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-            <h3 style={{ fontWeight: 700, fontSize: '1rem' }}>🕒 Recent Sales</h3>
+            <h3 style={{ fontWeight: 700, fontSize: '1rem', display: 'flex', alignItems: 'center', gap: 6 }}><Clock size={16} color="var(--info)" /> Recent Sales</h3>
             <Link to="/sales" style={{ display: 'flex', alignItems: 'center', gap: 4,
               color: 'var(--accent)', fontSize: '0.82rem', fontWeight: 600 }}>
               New Sale <ArrowRight size={14} />
@@ -313,8 +313,8 @@ export default function Dashboard() {
         {/* Low Stock */}
         <div className="card">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-            <h3 style={{ fontWeight: 700, fontSize: '1rem' }}>
-              ⚠️ Low Stock
+            <h3 style={{ fontWeight: 700, fontSize: '1rem', display: 'flex', alignItems: 'center', gap: 6 }}>
+              <AlertTriangle size={16} color="var(--danger)" /> Low Stock
               {low_stock_items.length > 0 && <span className="notif-dot" />}
             </h3>
             <Link to="/products" style={{ display: 'flex', alignItems: 'center', gap: 4,

@@ -5,7 +5,8 @@ const LayoutContext = createContext();
 const DEFAULT_SETTINGS = {
   theme: 'dark',
   sidebarColor: 'dark',
-  headerColor: 'transparent'
+  headerColor: 'transparent',
+  layoutMode: 'sidebar'
 };
 
 export function LayoutProvider({ children }) {
@@ -16,7 +17,8 @@ export function LayoutProvider({ children }) {
       return {
         theme: saved.theme || DEFAULT_SETTINGS.theme,
         sidebarColor: saved.sidebarColor || DEFAULT_SETTINGS.sidebarColor,
-        headerColor: saved.headerColor || DEFAULT_SETTINGS.headerColor
+        headerColor: saved.headerColor || DEFAULT_SETTINGS.headerColor,
+        layoutMode: saved.layoutMode || DEFAULT_SETTINGS.layoutMode
       };
     } catch {
       return DEFAULT_SETTINGS;
@@ -35,6 +37,7 @@ export function LayoutProvider({ children }) {
     }
     document.body.setAttribute('data-sidebar', settings.sidebarColor || 'dark');
     document.body.setAttribute('data-header', settings.headerColor || 'transparent');
+    document.body.setAttribute('data-layout', settings.layoutMode || 'sidebar');
   };
 
   useEffect(() => {

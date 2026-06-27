@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useToast } from '../context/ToastContext';
 import { useLayout } from '../context/LayoutContext';
-import { Store, User, Phone, MapPin, Target, Palette, Save } from 'lucide-react';
+import { Store, User, Phone, MapPin, Target, Palette, Save, Settings as SettingsIcon } from 'lucide-react';
 
 const DEFAULT_SETTINGS = {
   shopName:    'My Shop',
@@ -14,6 +14,7 @@ const DEFAULT_SETTINGS = {
   theme:       'dark',
   sidebarColor: 'dark',
   headerColor: 'transparent',
+  layoutMode:  'sidebar',
 };
 
 export default function Settings() {
@@ -35,6 +36,7 @@ export default function Settings() {
         theme: updated.theme,
         sidebarColor: updated.sidebarColor,
         headerColor: updated.headerColor,
+        layoutMode: updated.layoutMode,
       });
       return updated;
     });
@@ -48,6 +50,7 @@ export default function Settings() {
       theme: settings.theme,
       sidebarColor: settings.sidebarColor,
       headerColor: settings.headerColor,
+      layoutMode: settings.layoutMode,
     });
     
     toast('Settings saved ✅');
@@ -56,7 +59,7 @@ export default function Settings() {
   return (
     <div className="page">
       <div className="page-header">
-        <div><h2>⚙️ Settings</h2><p>Configure your shop profile and preferences</p></div>
+        <div><h2 style={{ display: 'flex', alignItems: 'center', gap: 8 }}><SettingsIcon size={20} color="var(--accent)" /> Settings</h2><p>Configure your shop profile and preferences</p></div>
         <button className="btn btn-primary" onClick={save}><Save size={16} /> Save Changes</button>
       </div>
 
@@ -121,12 +124,19 @@ export default function Settings() {
       {/* Appearance Settings */}
       <div className="settings-section">
         <h3>🎨 Theme & Appearance</h3>
-        <div className="form-row">
+        <div className="form-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16 }}>
           <div className="form-group">
             <label>Theme Mode</label>
             <select value={settings.theme} onChange={e => handleStyleChange('theme', e.target.value)}>
               <option value="dark">Dark Theme (Standard)</option>
               <option value="light">Light Theme (Clean Contrast)</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Navigation Layout</label>
+            <select value={settings.layoutMode} onChange={e => handleStyleChange('layoutMode', e.target.value)}>
+              <option value="sidebar">Left Sidebar (Default)</option>
+              <option value="topbar">Top Navigation Bar</option>
             </select>
           </div>
           <div className="form-group">

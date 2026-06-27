@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getAIInsights } from '../api/api';
-import { Sparkles, RefreshCw, Smartphone, Package, Coins, Users, Lightbulb } from 'lucide-react';
+import { Sparkles, RefreshCw, Smartphone, Package, Coins, Users, Lightbulb, Bot } from 'lucide-react';
 
 export default function AIAdvisor() {
   const [data,    setData]    = useState(null);
@@ -17,7 +17,7 @@ export default function AIAdvisor() {
     <div className="page">
       <div className="page-header">
         <div>
-          <h2>🤖 AI Business Advisor</h2>
+          <h2 style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Sparkles size={20} color="var(--accent)" /> AI Business Advisor</h2>
           <p>Smart insights based on your real shop data</p>
         </div>
         <button className="btn btn-ghost" onClick={load} disabled={loading}>
@@ -33,7 +33,7 @@ export default function AIAdvisor() {
         borderRadius: 16, padding: '20px 24px', marginBottom: 28,
         display: 'flex', alignItems: 'center', gap: 16
       }}>
-        <div style={{ fontSize: '2.5rem' }}>🤖</div>
+        <Bot size={40} color="var(--accent)" style={{ flexShrink: 0 }} />
         <div>
           <div style={{ fontWeight: 700, fontSize: '1.05rem', marginBottom: 4 }}>
             ShopMate AI is analysing your business...

@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback, Fragment } from 'react';
 import { getMonthlyReport, getSales, deleteSale } from '../api/api';
 import { useToast } from '../context/ToastContext';
 import { showConfirm } from '../components/ConfirmDialog';
-import { TrendingUp, Banknote, Receipt, Percent, Calendar, ChevronDown, ChevronUp, Trash2, Clock } from 'lucide-react';
+import { TrendingUp, Banknote, Receipt, Percent, Calendar, ChevronDown, ChevronUp, Trash2, Clock, BarChart2, Award, Users } from 'lucide-react';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
   CartesianGrid, Legend, PieChart, Pie, Cell
@@ -99,7 +99,7 @@ export default function Reports() {
     <div className="page">
       <div className="page-header" style={{ marginBottom: 16 }}>
         <div>
-          <h2>Reports & Logs</h2>
+          <h2 style={{ display: 'flex', alignItems: 'center', gap: 8 }}><BarChart2 size={20} color="var(--accent)" /> Reports & Logs</h2>
           <p>{activeTab === 'analytics' ? `Analytics for ${months[month - 1]} ${year}` : 'Browse and manage sales transactions'}</p>
         </div>
         
@@ -243,7 +243,7 @@ export default function Reports() {
           <div className="charts-grid">
             {/* Top Products Table */}
             <div className="chart-card">
-              <h3>🏆 Top Products by Revenue</h3>
+              <h3 style={{ display: 'flex', alignItems: 'center', gap: 6 }}><Award size={16} color="var(--gold)" /> Top Products by Revenue</h3>
               {best_sellers?.length === 0 ? (
                 <div className="empty-state"><p>No data yet</p></div>
               ) : (
@@ -274,7 +274,7 @@ export default function Reports() {
 
             {/* Top Customers */}
             <div className="chart-card">
-              <h3>👥 Top Customers</h3>
+              <h3 style={{ display: 'flex', alignItems: 'center', gap: 6 }}><Users size={16} color="var(--info)" /> Top Customers</h3>
               {top_customers?.length === 0 ? (
                 <div className="empty-state"><p>No customer data yet</p></div>
               ) : (

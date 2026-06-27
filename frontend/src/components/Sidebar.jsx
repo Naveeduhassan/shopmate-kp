@@ -5,7 +5,7 @@ import {
   BarChart2, Sparkles, Store, Receipt, Settings, X
 } from 'lucide-react';
 
-const links = [
+export const links = [
   { to: '/',          icon: <LayoutDashboard size={18} />, label: 'Dashboard' },
   { to: '/products',  icon: <Package size={18} />,         label: 'Products' },
   { to: '/sales',     icon: <ShoppingCart size={18} />,    label: 'Sales / POS' },

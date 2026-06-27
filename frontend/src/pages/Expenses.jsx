@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useToast } from '../context/ToastContext';
 import { showConfirm } from '../components/ConfirmDialog';
 import { getDailyReport, getExpenses, createExpense, deleteExpense } from '../api/api';
-import { Plus, Trash2, Receipt } from 'lucide-react';
+import { Plus, Trash2, Receipt, BarChart2 } from 'lucide-react';
 
 function fmt(n) { return `Rs. ${Number(n || 0).toLocaleString()}`; }
 
@@ -99,7 +99,7 @@ export default function Expenses() {
     <div className="page">
       <div className="page-header">
         <div>
-          <h2>💸 Expenses</h2>
+          <h2 style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Receipt size={20} color="var(--accent)" /> Expenses</h2>
           <p>Track daily costs and calculate true profit</p>
         </div>
         <button className="btn btn-primary" onClick={() => setShowForm(s => !s)}>
@@ -166,7 +166,7 @@ export default function Expenses() {
       {/* Category breakdown */}
       {Object.keys(byCategory).length > 0 && (
         <div className="card" style={{ marginBottom: 20 }}>
-          <h3 style={{ fontWeight: 700, marginBottom: 14, fontSize: '0.9rem' }}>📊 By Category</h3>
+          <h3 style={{ fontWeight: 700, marginBottom: 14, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: 6 }}><BarChart2 size={16} color="var(--accent)" /> By Category</h3>
           {Object.entries(byCategory).sort((a,b) => b[1]-a[1]).map(([cat, amt]) => (
             <div key={cat} style={{ marginBottom: 10 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: 4 }}>

@@ -41,8 +41,55 @@
 .receipt-divider { border-top: 1px dashed #ccc; margin: 10px 0; }
 .receipt-footer { text-align: center; margin-top: 12px; font-size: 0.72rem; color: #777; }
 @media print {
-  body > *:not(.print-receipt) { display: none !important; }
-  .print-receipt { display: block !important; }
+  /* Hide all elements on the page by default */
+  body * {
+    visibility: hidden !important;
+  }
+  
+  /* Make the printable receipt and its children visible */
+  #printable-receipt,
+  #printable-receipt * {
+    visibility: visible !important;
+  }
+  
+  /* Position the receipt at the top-left of the page to print nicely */
+  #printable-receipt {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 10px !important;
+    background: #fff !important;
+    color: #000 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* Reset background and shadow colors for the print overlay */
+  .modal-overlay,
+  .modal {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  /* Ensure all text inside receipt prints dark */
+  #printable-receipt h2,
+  #printable-receipt p,
+  #printable-receipt span,
+  #printable-receipt div {
+    color: #000 !important;
+  }
+  
+  @page {
+    margin: 0;
+    size: auto;
+  }
 }
 
 /* ─── Cash Calculator ──────────────────────────────────────────────────────── */
@@ -107,3 +154,75 @@
 
 /* ─── Void sale ────────────────────────────────────────────────────────────── */
 .void-badge { background: rgba(239,68,68,0.1); color: var(--danger); border: 1px solid rgba(239,68,68,0.25); border-radius: 6px; padding: 2px 8px; font-size: 0.72rem; font-weight: 700; }
+
+/* ─── TopBar Navigation Layout Styles ────────────────────────────────────────── */
+body[data-layout="topbar"] .sidebar {
+  display: none !important;
+}
+body[data-layout="topbar"] .sidebar-backdrop {
+  display: none !important;
+}
+body[data-layout="topbar"] .main-content {
+  margin-left: 0 !important;
+}
+body[data-layout="topbar"] .menu-toggle-btn {
+  display: none !important;
+}
+
+.topbar.topbar-layout {
+  padding: 0 24px;
+  height: 64px;
+  background: var(--bg-surface) !important;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.topbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+}
+.topbar-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+.topbar-link svg {
+  transition: var(--transition);
+}
+.topbar-link:hover {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+.topbar-link.active {
+  background: var(--accent-glow);
+  color: var(--accent);
+  font-weight: 600;
+}
+.topbar-link.active svg {
+  color: var(--accent);
+}
+
+/* Responsive topbar override */
+@media (max-width: 1024px) {
+  body[data-layout="topbar"] .sidebar {
+    display: flex !important; /* fallback to sliding sidebar menu drawer */
+  }
+  body[data-layout="topbar"] .sidebar-backdrop {
+    display: block !important;
+  }
+  body[data-layout="topbar"] .menu-toggle-btn {
+    display: flex !important; /* show burger on mobile */
+  }
+  .topbar-nav {
+    display: none !important; /* hide topbar links on mobile */
+  }
+}

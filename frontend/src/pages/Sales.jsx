@@ -10,7 +10,21 @@ function fmt(n) { return `Rs. ${Number(n || 0).toLocaleString()}`; }
 // ─── Receipt Modal ────────────────────────────────────────────────────────────
 function ReceiptModal({ sale, cart, shopName, onClose }) {
   const handlePrint = () => window.print();
-  const time = new Date().toLocaleString('en-PK');
+  
+  const formattedTime = sale.created_at
+    ? (() => {
+        try {
+          // Convert database datetime format (YYYY-MM-DD HH:MM:SS) to standard ISO format
+          const isoStr = sale.created_at.replace(' ', 'T') + 'Z';
+          return new Date(isoStr).toLocaleString('en-PK', {
+            dateStyle: 'medium',
+            timeStyle: 'short'
+          });
+        } catch (e) {
+          return new Date().toLocaleString('en-PK');
+        }
+      })()
+    : new Date().toLocaleString('en-PK');
 
   return (
     <div className="modal-overlay">
@@ -23,53 +37,88 @@ function ReceiptModal({ sale, cart, shopName, onClose }) {
         <div className="receipt" id="printable-receipt">
           <div className="receipt-header">
             <h2>{shopName}</h2>
-            <p>Digital Receipt — ShopMate KP</p>
-            <p style={{ marginTop: 4, fontSize: '0.7rem', color: '#888' }}>{time}</p>
+            <p>Kiryana & General Store POS Receipt</p>
+            <p style={{ fontWeight: 700, marginTop: 4, letterSpacing: '0.05em' }}>INVOICE: KP-{sale.id || 'N/A'}</p>
+            <p style={{ marginTop: 2, fontSize: '0.72rem', color: '#555' }}>Date: {formattedTime}</p>
           </div>
 
+          {sale.customerName && (
+            <>
+              <div className="receipt-row" style={{ color: '#333', fontSize: '0.78rem' }}>
+                <span>Customer:</span>
+                <span style={{ fontWeight: 700 }}>{sale.customerName}</span>
+              </div>
+              {sale.customerPhone && (
+                <div className="receipt-row" style={{ color: '#555', fontSize: '0.75rem', marginTop: 1 }}>
+                  <span>Phone:</span>
+                  <span>{sale.customerPhone}</span>
+                </div>
+              )}
+              <div className="receipt-divider" />
+            </>
+          )}
+
+          <div style={{ marginBottom: 8, fontSize: '0.78rem', fontWeight: 700, borderBottom: '1px dashed #ccc', paddingBottom: 4 }}>ITEMS</div>
+
           {cart.map((item, i) => (
-            <div key={i} className="receipt-row">
-              <span>{item.name} × {item.quantity}</span>
-              <span>{fmt(item.selling_price * item.quantity)}</span>
+            <div key={i} className="receipt-row" style={{ flexDirection: 'column', alignItems: 'stretch', marginBottom: 8 }}>
+              <div style={{ fontWeight: 600, color: '#111' }}>{item.name}</div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: '#555', fontSize: '0.78rem', marginTop: 1 }}>
+                <span>{item.quantity} × {fmt(item.selling_price)}</span>
+                <span style={{ fontWeight: 600, color: '#222' }}>{fmt(item.selling_price * item.quantity)}</span>
+              </div>
             </div>
           ))}
 
           <div className="receipt-divider" />
 
+          <div className="receipt-row" style={{ color: '#555', fontSize: '0.85rem' }}>
+            <span>Subtotal</span>
+            <span>{fmt(sale.total + sale.discount)}</span>
+          </div>
+
           {sale.discount > 0 && (
-            <div className="receipt-row" style={{ color: '#e53e3e' }}>
+            <div className="receipt-row" style={{ color: '#e53e3e', fontSize: '0.85rem' }}>
               <span>Discount</span>
               <span>- {fmt(sale.discount)}</span>
             </div>
           )}
 
-          <div className="receipt-row bold" style={{ fontSize: '1rem' }}>
-            <span>TOTAL</span>
+          <div className="receipt-row bold" style={{ fontSize: '1.05rem', borderTop: '1px dashed #ccc', paddingTop: 6, marginTop: 4 }}>
+            <span>GRAND TOTAL</span>
             <span>{fmt(sale.total)}</span>
+          </div>
+
+          <div className="receipt-divider" />
+          
+          <div className="receipt-row" style={{ color: '#555', fontSize: '0.8rem' }}>
+            <span>Payment Mode</span>
+            <span style={{ textTransform: 'capitalize', fontWeight: 700 }}>{sale.payType}</span>
           </div>
 
           {sale.payType === 'cash' && sale.cashReceived > 0 && (
             <>
-              <div className="receipt-row" style={{ color: '#555' }}>
+              <div className="receipt-row" style={{ color: '#555', fontSize: '0.8rem', marginTop: 2 }}>
                 <span>Cash Received</span>
                 <span>{fmt(sale.cashReceived)}</span>
               </div>
-              <div className="receipt-row bold" style={{ color: '#16a34a' }}>
-                <span>Change</span>
+              <div className="receipt-row bold" style={{ color: '#16a34a', fontSize: '0.85rem', marginTop: 2 }}>
+                <span>Change Given</span>
                 <span>{fmt(Math.max(0, sale.cashReceived - sale.total))}</span>
               </div>
             </>
           )}
 
-          <div className="receipt-divider" />
-          <div className="receipt-row" style={{ color: '#555', fontSize: '0.75rem' }}>
-            <span>Payment</span>
-            <span style={{ textTransform: 'capitalize' }}>{sale.payType}</span>
-          </div>
+          {sale.payType === 'udhaar' && (
+            <div className="receipt-row bold" style={{ color: '#e53e3e', fontSize: '0.8rem', justifyContent: 'center', marginTop: 6, border: '1px dashed #e53e3e', padding: '4px 0' }}>
+              <span>** Debited to Udhaar Khata **</span>
+            </div>
+          )}
 
-          <div className="receipt-footer">
-            <p>شکریہ — Thank you for shopping!</p>
-            <p>Powered by ShopMate KP 🏪</p>
+          <div className="receipt-footer" style={{ borderTop: '2px dashed #ccc', paddingTop: 10, marginTop: 12 }}>
+            <p style={{ fontWeight: 600, color: '#333' }}>شکریہ — Thank you for your business!</p>
+            <p style={{ fontSize: '0.68rem', marginTop: 4 }}>Goods once sold cannot be returned or exchanged.</p>
+            <p style={{ fontSize: '0.65rem', marginTop: 2, color: '#aaa' }}>Powered by ShopMate KP 🏪</p>
           </div>
         </div>
 
@@ -258,20 +307,24 @@ export default function Sales() {
 
     setSubmitting(true);
     try {
-      await createSale({
+      const res = await createSale({
         items:        cart.map(i => ({ product_id: i.product_id, quantity: i.quantity })),
         payment_type: payType,
         customer_id:  custId || null,
         discount:     discountAmt,
       });
+      const createdSale = res.data?.sale;
 
       // Show receipt before clearing
       setReceipt({
+        id: createdSale?.id || 'N/A',
         total,
         discount: discountAmt,
         payType,
         cashReceived: parseFloat(cashIn) || 0,
         customerName: custId ? customers.find(c => String(c.id) === String(custId))?.name : null,
+        customerPhone: custId ? customers.find(c => String(c.id) === String(custId))?.phone : null,
+        created_at: createdSale?.created_at || new Date().toISOString(),
       });
 
       toast('Sale completed! 🎉');
@@ -334,7 +387,7 @@ export default function Sales() {
     <div className="page" style={{ paddingBottom: 0 }}>
       <div className="page-header" style={{ marginBottom: 16 }}>
         <div>
-          <h2 style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Store size={20} color="var(--accent)" /> Sales / POS</h2>
+          <h2 style={{ display: 'flex', alignItems: 'center', gap: 8 }}><ShoppingCart size={20} color="var(--accent)" /> Sales / POS</h2>
           <p>
             Press <span className="kbd">/</span> to search &nbsp;·&nbsp;
             <span className="kbd">Esc</span> to clear

@@ -3,7 +3,7 @@ import { getCustomers, createCustomer, updateCustomer, deleteCustomer, createUdh
 import { useToast } from '../context/ToastContext';
 import { showConfirm } from '../components/ConfirmDialog';
 import Modal from '../components/Modal';
-import { Plus, Search, Trash2, CreditCard, TrendingDown, Edit2, MessageCircle } from 'lucide-react';
+import { Plus, Search, Trash2, CreditCard, TrendingDown, Edit2, MessageCircle, Users, Phone } from 'lucide-react';
 
 function fmt(n) { return `Rs. ${Number(n || 0).toLocaleString()}`; }
 
@@ -142,7 +142,7 @@ export default function Udhaar() {
     <div className="page">
       <div className="page-header">
         <div>
-          <h2>Udhaar (Credit)</h2>
+          <h2 style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Users size={20} color="var(--accent)" /> Udhaar (Credit)</h2>
           <p>Total outstanding: <strong style={{ color: 'var(--gold)' }}>{fmt(totalOutstanding)}</strong></p>
         </div>
         <button className="btn btn-primary" onClick={() => setModal('add-customer')}>
@@ -170,7 +170,7 @@ export default function Udhaar() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
                   <div className="udhaar-customer">{c.name}</div>
-                  <div className="udhaar-phone">📞 {c.phone || 'No phone'}</div>
+                  <div className="udhaar-phone" style={{ display: 'flex', alignItems: 'center', gap: 4 }}><Phone size={12} color="var(--text-muted)" /> {c.phone || 'No phone'}</div>
                 </div>
                 <div style={{ display: 'flex', gap: 6 }}>
                   <button className="btn btn-ghost btn-sm" style={{ padding: '6px 8px' }}

@@ -116,7 +116,7 @@ export default function Products() {
       {/* Header */}
       <div className="page-header">
         <div>
-          <h2>📦 Products</h2>
+          <h2 style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Package size={20} color="var(--accent)" /> Products</h2>
           <p>
             {products.length} products · Inventory value: <strong style={{ color: 'var(--accent)' }}>{fmt(totalValue)}</strong>
             {lowStockCount > 0 && <span className="notif-dot" title={`${lowStockCount} low stock`} />}
