@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useToast } from '../context/ToastContext';
 import { useLayout } from '../context/LayoutContext';
-import { Store, User, Phone, MapPin, Target, Palette, Save, Settings as SettingsIcon } from 'lucide-react';
+import { Store, User, Phone, MapPin, Target, Palette, Save, Settings as SettingsIcon, Info, Rocket, Sparkles, Scan, Printer, MessageSquare, Cloud, Users, BarChart2, RefreshCw, Coins } from 'lucide-react';
 
 const DEFAULT_SETTINGS = {
   shopName:    'My Shop',
@@ -65,7 +65,7 @@ export default function Settings() {
 
       {/* Shop Info */}
       <div className="settings-section">
-        <h3>🏪 Shop Information</h3>
+        <h3 style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Store size={16} color="var(--accent)" /> Shop Information</h3>
         <div className="form-row">
           <div className="form-group">
             <label>Shop Name *</label>
@@ -99,7 +99,7 @@ export default function Settings() {
 
       {/* Business Goals */}
       <div className="settings-section">
-        <h3>🎯 Business Goals</h3>
+        <h3 style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Target size={16} color="var(--gold)" /> Business Goals</h3>
         <div className="form-row">
           <div className="form-group">
             <label>Daily Sales Target (Rs.)</label>
@@ -123,7 +123,7 @@ export default function Settings() {
 
       {/* Appearance Settings */}
       <div className="settings-section">
-        <h3>🎨 Theme & Appearance</h3>
+        <h3 style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Palette size={16} color="var(--info)" /> Theme & Appearance</h3>
         <div className="form-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16 }}>
           <div className="form-group">
             <label>Theme Mode</label>
@@ -160,7 +160,7 @@ export default function Settings() {
 
       {/* App Info */}
       <div className="settings-section">
-        <h3>ℹ️ App Information</h3>
+        <h3 style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Info size={16} color="var(--text-muted)" /> App Information</h3>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           {[
             { label: 'App Name',     val: 'ShopMate KP' },
@@ -185,14 +185,31 @@ export default function Settings() {
       <div style={{ background: 'linear-gradient(135deg, rgba(16,185,129,0.08), rgba(245,158,11,0.06))',
         border: '1px solid rgba(16,185,129,0.2)', borderRadius: 'var(--radius-lg)', padding: '20px 24px',
         marginTop: 4 }}>
-        <div style={{ fontWeight: 700, fontSize: '0.95rem', marginBottom: 6 }}>🚀 Coming in Version 2</div>
+        <div style={{ fontWeight: 700, fontSize: '0.95rem', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}><Rocket size={16} color="var(--accent)" /> Coming in Version 2</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 8 }}>
-          {['📱 Barcode Scanner','🖨️ Thermal Printer','📲 WhatsApp Receipts',
-            '☁️ Cloud Backup','👥 Multi-User','📊 Advanced Analytics',
-            '🔄 Return/Refund','💰 EasyPaisa/JazzCash'].map(f => (
-            <div key={f} style={{ fontSize: '0.82rem', color: 'var(--text-secondary)',
-              padding: '6px 10px', background: 'var(--bg-card)', borderRadius: 8,
-              border: '1px solid var(--border)' }}>{f}
+          {[
+            { icon: <Scan size={14} color="var(--accent)" />, label: 'Barcode Scanner' },
+            { icon: <Printer size={14} color="var(--accent)" />, label: 'Thermal Printer' },
+            { icon: <MessageSquare size={14} color="var(--accent)" />, label: 'WhatsApp Receipts' },
+            { icon: <Cloud size={14} color="var(--accent)" />, label: 'Cloud Backup' },
+            { icon: <Users size={14} color="var(--accent)" />, label: 'Multi-User' },
+            { icon: <BarChart2 size={14} color="var(--accent)" />, label: 'Advanced Analytics' },
+            { icon: <RefreshCw size={14} color="var(--accent)" />, label: 'Return/Refund' },
+            { icon: <Coins size={14} color="var(--accent)" />, label: 'EasyPaisa/JazzCash' }
+          ].map((f, i) => (
+            <div key={i} style={{ 
+              fontSize: '0.82rem', 
+              color: 'var(--text-secondary)',
+              padding: '6px 10px', 
+              background: 'var(--bg-card)', 
+              borderRadius: 8,
+              border: '1px solid var(--border)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8
+            }}>
+              {f.icon}
+              <span>{f.label}</span>
             </div>
           ))}
         </div>
