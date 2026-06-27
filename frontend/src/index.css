@@ -37,6 +37,39 @@
   --transition:    all 0.2s ease;
 }
 
+/* ─── Light Theme Variables ────────────────────────────────────────────────── */
+body.light-theme {
+  --bg-base:       #f8fafc; /* Slate-50 base background */
+  --bg-surface:    #ffffff; /* White containers/menus */
+  --bg-card:       #ffffff; /* White cards */
+  --bg-card-hover: #f1f5f9; /* Slate-100 hover background */
+  --bg-input:      #f8fafc; /* Slate-50 input field */
+  --border:        #e2e8f0; /* Slate-200 border lines */
+  --border-light:  #cbd5e1; /* Slate-300 border lines */
+
+  --text-primary:  #0f172a; /* Slate-900 for main text readability */
+  --text-secondary:#475569; /* Slate-600 for labels/descriptions */
+  --text-muted:    #64748b; /* Slate-500 for captions and timestamps */
+
+  --accent:        #10b981;
+  --accent-dim:    #059669;
+  --accent-glow:   rgba(16, 185, 129, 0.08);
+
+  --gold:          #d97706; /* Darker gold/orange for clear reading on light theme */
+  --gold-dim:      #b45309;
+  --gold-glow:     rgba(217, 119, 6, 0.1);
+
+  --danger:        #dc2626; /* Deep red for contrast on light theme */
+  --danger-dim:    #b91c1c;
+  --danger-glow:   rgba(220, 38, 38, 0.08);
+
+  --info:          #2563eb; /* Deep blue for links and tags */
+  --info-glow:     rgba(37, 99, 235, 0.08);
+
+  --shadow:        0 4px 18px rgba(15, 23, 42, 0.04);
+  --shadow-lg:     0 8px 30px rgba(15, 23, 42, 0.06);
+}
+
 /* ─── Reset ────────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -741,6 +774,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 input[type=number] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 /* ─── Light Theme Variable Overrides ─── */
@@ -963,5 +997,79 @@ body.light-theme[data-sidebar="dark"] .sidebar .sidebar-footer p {
     font-size: 0.85rem !important;
   }
 }
+
+/* ─── Sidebar Color Themes ──────────────────────────────────────────────────── */
+body[data-sidebar="emerald"] .sidebar {
+  background: #064e3b !important;
+  border-right-color: #047857 !important;
+  --text-primary: #ecfdf5 !important;
+  --text-secondary: #a7f3d0 !important;
+  --text-muted: #34d399 !important;
+}
+body[data-sidebar="emerald"] .sidebar-logo {
+  border-bottom-color: #047857 !important;
+}
+body[data-sidebar="emerald"] .sidebar-logo h1 {
+  background: linear-gradient(135deg, #ffffff, var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+body[data-sidebar="emerald"] .sidebar-nav a {
+  color: #a7f3d0 !important;
+}
+body[data-sidebar="emerald"] .sidebar-nav a:hover {
+  background: rgba(255,255,255,0.06) !important;
+  color: #ffffff !important;
+}
+body[data-sidebar="emerald"] .sidebar-nav a.active {
+  background: rgba(255,255,255,0.12) !important;
+  color: #ffffff !important;
+  border-color: rgba(255,255,255,0.2) !important;
+}
+body[data-sidebar="emerald"] .sidebar-footer {
+  border-top-color: #047857 !important;
+  color: #34d399 !important;
+}
+
+body[data-sidebar="navy"] .sidebar {
+  background: #0f172a !important;
+  border-right-color: #1e293b !important;
+  --text-primary: #f8fafc !important;
+  --text-secondary: #94a3b8 !important;
+  --text-muted: #64748b !important;
+}
+body[data-sidebar="navy"] .sidebar-logo {
+  border-bottom-color: #1e293b !important;
+}
+body[data-sidebar="navy"] .sidebar-nav a {
+  color: #94a3b8 !important;
+}
+body[data-sidebar="navy"] .sidebar-nav a:hover {
+  background: rgba(255,255,255,0.04) !important;
+  color: #ffffff !important;
+}
+body[data-sidebar="navy"] .sidebar-nav a.active {
+  background: var(--accent-glow) !important;
+  color: var(--accent) !important;
+  border-color: rgba(16,185,129,0.2) !important;
+}
+body[data-sidebar="navy"] .sidebar-footer {
+  border-top-color: #1e293b !important;
+  color: #64748b !important;
+}
+
+/* ─── Header Color Themes ───────────────────────────────────────────────────── */
+body[data-header="transparent"] .topbar {
+  background: transparent !important;
+}
+body[data-header="solid"] .topbar {
+  background: var(--bg-surface) !important;
+}
+body[data-header="accent"] .topbar {
+  background: var(--accent-glow) !important;
+  border-bottom-color: rgba(16, 185, 129, 0.25) !important;
+}
+
 
 

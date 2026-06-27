@@ -202,7 +202,7 @@ export default function Reports() {
               ) : (
                 <ResponsiveContainer width="100%" height={240}>
                   <BarChart data={daily_breakdown} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#1e2d45" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                     <XAxis dataKey="date" tick={{ fill: '#64748b', fontSize: 11 }}
                       tickFormatter={d => d.slice(8)} />
                     <YAxis tick={{ fill: '#64748b', fontSize: 11 }} tickFormatter={v => `${v/1000}k`} />
